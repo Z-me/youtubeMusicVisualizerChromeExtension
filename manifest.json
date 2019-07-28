@@ -1,0 +1,28 @@
+{
+  "manifest_version": 2,
+  "name": "Youtube Music Visualizer",
+  "description": "",
+  "version": "1.0",
+  "icons": {
+    "16": "images/icon_16.png",
+    "48": "images/icon_48.png",
+    "128": "images/icon_128.png"
+  },
+  "background": {
+    "scripts": ["js/background.js", "lib/jquery.min.js"],
+    "persistent": false
+  },
+  "browser_action": {
+    "default_title": "Youtube Music Visualizer Setting",
+    "default_popup": "html/setting.html"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "lib/jquery.min.js",
+        "js/content_scripts.js"
+      ],
+      "matches": ["https://*/*", "http://*/*"]
+    }
+  ]
+}
