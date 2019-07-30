@@ -1,12 +1,21 @@
 console.log('called setting.js')
 $(() => {
   $('#active').on('change', (val) => {
-    chrome.tabs.query({ active: true, currentWindow: true}, (tabs) => {
-      chrome.tabs.sendMessage(tabs[0].id, {
-        color: 'black'
-      })
+    $('#active:checked').each(() => {
+      changeActive(true)
+    })
+    $('#active:not(:checked)').each(() => {
+      changeActive(false)
     })
   })
+  var changeActive = (flag) => {
+    console.log(flag)
+    chrome.tabs.query({ active: true, currentWindow: true}, (tabs) => {
+      chrome.tabs.sendMessage(tabs[0].id, {
+        result: flag
+      })
+    })
+  }
 
   $('#black').on('click', () => {
     console.log('balck')

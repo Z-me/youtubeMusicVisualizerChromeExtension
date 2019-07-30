@@ -22,7 +22,7 @@
         "/lib/js/jquery.min.js",
         "/src/js/content_scripts.js"
       ],
-      "matches": ["https://*/*", "http://*/*"]
+      "matches": ["https://www.youtube.com/watch*"]
     }
   ]
 }
