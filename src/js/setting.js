@@ -1,5 +1,7 @@
-console.log('called setting.js')
 $(() => {
+  var isActive = false,
+      type = 'Visualizer_01'
+
   $('#active').on('change', (val) => {
     $('#active:checked').each(() => {
       changeActive(true)
@@ -8,30 +10,29 @@ $(() => {
       changeActive(false)
     })
   })
-  var changeActive = (flag) => {
-    console.log(flag)
+
+  const sendData2Content = (type, d) => {
+    var data = {}
+    data[type] = d
+    // NOTE: chrome.tabs.sendMessage will Deprecated since Chrome 33...
     chrome.tabs.query({ active: true, currentWindow: true}, (tabs) => {
-      chrome.tabs.sendMessage(tabs[0].id, {
-        result: flag
+      chrome.tabs.sendMessage(tabs[0].id, data, () => {
+        console.log('update Content' )
       })
     })
   }
 
-  $('#black').on('click', () => {
-    console.log('balck')
-    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, {
-        color: 'black'
-      })
+  const sendData2Background = (type = 'get',dType = '', d = '') => {
+    var data = {}
+    if (type === 'set') data[dType] = d
+    data['type'] = type
+    chrome.runtime.sendMessage(data, (res) => {
+      console.log('send Background: ', res)
     })
-  })
+  }
 
-  $('#red').on('click', () => {
-    console.log('red')
-    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, {
-        color: 'red'
-      })
-    })
-  })
+  const changeActive = (flag) => {
+    sendData2Content('isActive', flag)
+    sendData2Background('set', 'isActive', flag)
+  }
 })

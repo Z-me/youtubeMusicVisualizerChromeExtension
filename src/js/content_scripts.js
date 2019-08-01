@@ -1,8 +1,14 @@
-console.log('content_scripts called');
-chrome.runtime.onMessage.addListener((msg) => {
-  if (msg.result) {
-    $('video').hide()
-  } else {
-    $('video').show()
-  }
+const hideVideo = () => {
+  $('video').hide()
+}
+
+const showVideo = () => {
+  $('video').show()
+}
+
+chrome.runtime.onMessage.addListener((data, sender, sendResponse) => {
+  // console.log('data', data)
+  data.isActive ? hideVideo() : showVideo()
+
+  sendResponse('update Content')
 })
