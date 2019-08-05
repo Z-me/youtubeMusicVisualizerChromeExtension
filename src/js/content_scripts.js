@@ -8,8 +8,11 @@ const showVideo = () => {
 
 const init = () => {
   console.log('called init contents')
-  $('.html5-video-container').append('<canvas id="ymv"></canvas>');
-  syncVideoAttr()
+  // $('.html5-video-container').append('<canvas id="ymv"></canvas>');
+  // NOTE: show sample images
+  $('.html5-video-container').append(`<img id="ymv" src="${chrome.extension.getURL('/images/sample/sample01.gif')}"></img>`);
+  attr = syncVideoAttr()
+  // new Circle2D(attr.width, attr.height)
 }
 
 const syncVideoAttr = () => {
@@ -20,6 +23,7 @@ const syncVideoAttr = () => {
   })
   delete attrObj['']
   $('#ymv').css(attrObj)
+  return attrObj
 }
 
 chrome.runtime.onMessage.addListener((data, sender, sendResponse) => {
@@ -29,4 +33,6 @@ chrome.runtime.onMessage.addListener((data, sender, sendResponse) => {
   sendResponse('update Content')
 })
 
+var attr = {}
+var canvas = null
 init()

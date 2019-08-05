@@ -20,12 +20,18 @@
     {
       "js": [
         "/lib/js/jquery.min.js",
+        "/src/js/circle2DClass.js",
         "/src/js/content_scripts.js"
       ],
       "matches": ["https://www.youtube.com/watch*"]
     }
   ],
   "permissions": [
-    "storage"
+    "storage",
+    "<all_urls>"
+  ],
+  "web_accessible_resources": [
+    "/src/js/*",
+    "/images/*"
   ]
 }
