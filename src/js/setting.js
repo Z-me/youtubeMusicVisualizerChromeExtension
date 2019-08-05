@@ -31,8 +31,17 @@ $(() => {
     })
   }
 
+  const init = () => {
+    var bgData = chrome.extension.getBackgroundPage()
+    console.log('bgData', bgData)
+    changeActive(bgData.ymv.isActive)
+  }
+
   const changeActive = (flag) => {
     sendData2Content('isActive', flag)
     sendData2Background('set', 'isActive', flag)
+    $('#active').prop('checked', flag)
   }
+
+  init()
 })
